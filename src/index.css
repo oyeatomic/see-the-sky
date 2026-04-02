@@ -1,0 +1,386 @@
+:root {
+  --text-dark: #2D3748;
+  --text-muted: #718096;
+  --font-serif: 'Playfair Display', serif;
+  --font-mono: 'Space Mono', monospace;
+  --blue-accent: #3182ce;
+  --graph-line: rgba(144, 203, 230, 0.4);
+  --graph-bg: #e1f4fc;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-serif);
+  color: var(--text-dark);
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background-color: var(--graph-bg); /* Fallback */
+}
+
+/* Backgrounds - Top Half Sky, Bottom Half Graph Paper */
+.sky-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60vh;
+  background: linear-gradient(to bottom, #89c4f4 0%, #dbeaf9 100%), url('https://images.unsplash.com/photo-1549474749-0d12e8b2ed3c?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+  background-blend-mode: overlay;
+  z-index: -2;
+}
+
+.graph-background {
+  position: absolute;
+  top: 50vh;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 50vh);
+  background-color: var(--graph-bg);
+  background-image: 
+      linear-gradient(var(--graph-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--graph-line) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-position: center top;
+  z-index: -2;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
+}
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Top Navigation */
+.top-navigation {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: rgba(45, 55, 72, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 3rem;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 7rem;
+}
+
+.primary-heading {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: #3e5a70;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 4px 10px rgba(255, 255, 255, 0.6);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #4a5568;
+  margin-bottom: 4rem;
+}
+
+/* Upload Widget - Glassmorphism */
+.upload-widget {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 650px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(31, 38, 135, 0.05);
+  transition: all 0.3s ease;
+}
+
+.upload-widget:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.inner-drop-zone {
+  border: 1px dashed rgba(113, 128, 150, 0.5);
+  border-radius: 8px;
+  padding: 4.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.inner-drop-zone:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.upload-icon {
+  color: var(--blue-accent);
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.upload-text {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--blue-accent);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.sub-upload-text {
+  font-family: var(--font-serif);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.caption-input {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(113, 128, 150, 0.3);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-dark);
+  outline: none;
+  transition: all 0.2s;
+}
+
+.caption-input:focus {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(113, 128, 150, 0.6);
+}
+
+/* Action Button Overlapping Bottom Edge */
+.action-button {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333d47;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  padding: 0.85rem 2.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.action-button:hover:not(:disabled) {
+  background: #20272d;
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Gallery Section */
+.gallery-section {
+  margin-top: 3rem;
+  padding-bottom: 5rem;
+}
+
+.gallery-title {
+  text-align: center;
+  font-size: 1.6rem;
+  color: #4a5568;
+  margin-bottom: 5rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 240px));
+  gap: 3.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+/* Responsive Grid */
+@media (max-width: 1024px) {
+  .gallery-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
+  }
+}
+@media (max-width: 850px) {
+  .content-wrapper { padding: 2rem; }
+  .primary-heading { font-size: 3.5rem; }
+}
+@media (max-width: 550px) {
+  .top-navigation {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+  }
+  .primary-heading { font-size: 2.5rem; }
+}
+
+/* Receipt Cards Wrapper */
+.receipt-wrapper {
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  animation: fadeUpIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.08));
+  transition: transform 0.3s ease-out, filter 0.3s ease-out;
+}
+
+@keyframes fadeUpIn {
+  to {
+      opacity: 1;
+      transform: translateY(0) scale(1) var(--rot);
+  }
+}
+
+.receipt-wrapper:hover {
+  transform: scale(1.06) rotate(0deg) !important;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
+  z-index: 10;
+}
+
+/* The actual masked card */
+.receipt-card {
+  background: #fff;
+  padding: 12px 12px 30px 12px;
+  position: relative;
+  height: 100%;
+  
+  -webkit-mask-image: 
+      linear-gradient(black, black),
+      radial-gradient(circle at center bottom, transparent 4px, black 4.5px);
+  -webkit-mask-size: 100% calc(100% - 6px), 12px 8px;
+  -webkit-mask-repeat: no-repeat, repeat-x;
+  -webkit-mask-position: top center, bottom center;
+  
+  mask-image: 
+      linear-gradient(black, black),
+      radial-gradient(circle at center bottom, transparent 4px, black 4.5px);
+  mask-size: 100% calc(100% - 6px), 12px 8px;
+  mask-repeat: no-repeat, repeat-x;
+  mask-position: top center, bottom center;
+}
+
+.washi-tape {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(var(--tape-rot));
+  width: 36px;
+  height: 18px;
+  background: var(--tape-color);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 2;
+  opacity: 0.85;
+}
+
+.receipt-image {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 1rem;
+  background: #f0f0f0;
+}
+
+.receipt-meta {
+  font-family: var(--font-mono);
+  text-align: center;
+  color: var(--text-dark);
+}
+
+.receipt-timestamp {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.receipt-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  font-family: var(--font-serif);
+}
+
+.receipt-subtext {
+  font-size: 0.55rem;
+  color: #a0aec0;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+/* Pure CSS Barcode */
+.receipt-barcode {
+  height: 14px;
+  width: 65%;
+  margin: 0.5rem auto 0;
+  background-image: repeating-linear-gradient(
+      to right,
+      #2D3748 0px,
+      #2D3748 1px,
+      transparent 1px,
+      transparent 3px,
+      #2D3748 3px,
+      #2D3748 5px,
+      transparent 5px,
+      transparent 7px,
+      #2D3748 7px,
+      #2D3748 8px,
+      transparent 8px,
+      transparent 10px,
+      #2D3748 10px,
+      #2D3748 13px,
+      transparent 13px,
+      transparent 15px
+  );
+  opacity: 0.7;
+}
+
+/* Footer Section */
+.footer-bar {
+  background: #2d3748;
+  color: #fff;
+  padding: 1.25rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .footer-bar {
+      padding: 1.25rem 2rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+  }
+}
