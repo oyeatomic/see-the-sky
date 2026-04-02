@@ -157,6 +157,7 @@ body {
 .caption-input {
   width: 100%;
   margin-top: 1rem;
+  margin-bottom: 2rem; /* Added clearance for the absolutely positioned button */
   padding: 0.75rem 1rem;
   border: 1px solid rgba(113, 128, 150, 0.3);
   border-radius: 4px;
